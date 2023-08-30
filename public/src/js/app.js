@@ -1,11 +1,5 @@
-// if('serviceWorker' in navigator){
-//     navigator.serviceWorker
-//     .register('/sw.js',{scope:'/help/'})
-//     .then(function(){
-//         console.log('Service Worker registered');    
-//     });
-// }
-var defferedprompt;
+
+let defferedprompt;
 
 if('serviceWorker' in navigator){
     navigator.serviceWorker

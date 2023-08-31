@@ -1,6 +1,6 @@
 # Points in the repository
-    1) Fallback 
-    2) Showing erro message and redirecting the user to the page that is present in the cache
-    3) It is done from the network in the dev web tools
-    4) We have the delete the previous cache otherwise it will not work
+    1) Understanding Firebase and using it to store data
+    2) Creating data in the firebase 
+    3) Responsove UI and some animations
+    4) Understood the need of IndexedDB and Dynamic Data Content
 

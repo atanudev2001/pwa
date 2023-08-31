@@ -1,4 +1,4 @@
-let cache_static_name = 'static-v11';
+let cache_static_name = 'static-v12';
 let cache_dynamic_name = 'dynamic-v3';
 
 
@@ -43,30 +43,57 @@ self.addEventListener('activate',function(event){
     return self.clients.claim();
 });
 
+// self.addEventListener('fetch',function(event){
+//     if (!(event.request.url.indexOf('http') === 0)) return;
+
+//     event.respondWith(
+//         caches.match(event.request)
+//         .then(function(response){
+//             if(response){
+//                 return response;
+//             }else{
+//                 return fetch(event.request)
+//                     .then(function(res){
+//                         return caches.open(cache_dynamic_name)
+//                             .then(function(cache){
+//                                 cache.put(event.request.url,res.clone())
+//                                     return res;
+//                             })
+//                     })
+//                     .catch(function(err){
+//                         return caches.open(cache_static_name)
+//                             .then(function(cache){
+//                                 return cache.match('/offline.html');
+//                             });
+//                     })
+//             }
+//         })        
+//     );
+// });
 self.addEventListener('fetch',function(event){
     if (!(event.request.url.indexOf('http') === 0)) return;
 
     event.respondWith(
-        caches.match(event.request)
-        .then(function(response){
-            if(response){
-                return response;
-            }else{
-                return fetch(event.request)
-                    .then(function(res){
-                        return caches.open(cache_dynamic_name)
-                            .then(function(cache){
-                                cache.put(event.request.url,res.clone())
-                                    return res;
-                            })
-                    })
-                    .catch(function(err){
-                        return caches.open(cache_static_name)
-                            .then(function(cache){
-                                return cache.match('/offline.html');
-                            });
-                    })
-            }
-        })        
-    );
+        fetch(event.request)
+        .catch(function(err){
+            return caches.match(event.request);
+        })
+    ) 
+       
 });
+
+//Cache Only strategy
+
+// self.addEventListener('fetch',function(event){
+//     event.respondWith(
+//         caches.match(event.request)
+//     );
+// });
+
+//Cache Only strategy
+
+// self.addEventListener('fetch',function(event){
+//     event.respondWith(
+//         fetch(event.request)
+//     );
+// });

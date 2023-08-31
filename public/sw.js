@@ -1,13 +1,18 @@
+let cache_static_name = 'static-v11';
+let cache_dynamic_name = 'dynamic-v3';
+
+
 self.addEventListener('install',function(event){
     console.log('[service worker] Installing service worker',event);
     event.waitUntil(
-        caches.open('static')
+        caches.open(cache_static_name)
         .then(function(cache){
             console.log('[service worker] Precaching App Shell');
             // cache.add('/index.html')
             cache.addAll([
                 '/',
                 '/index.html',
+                '/offline.html',
                 '/src/js/app.js',
                 '/src/js/feed.js',
                 '/src/js/material.min.js',
@@ -24,10 +29,23 @@ self.addEventListener('install',function(event){
 
 self.addEventListener('activate',function(event){
     console.log('[service worker] activating service worker',event);
+    event.waitUntil(
+        caches.keys()
+            .then(function(keylist){
+                return Promise.all(keylist.map(function(key){
+                    if(key != cache_static_name && key != cache_dynamic_name){
+                        console.log('[service worker] Removing old cach.',key);
+                        return caches.delete(key);
+                    }
+                }));
+            })
+    );
     return self.clients.claim();
 });
 
 self.addEventListener('fetch',function(event){
+    if (!(event.request.url.indexOf('http') === 0)) return;
+
     event.respondWith(
         caches.match(event.request)
         .then(function(response){
@@ -36,14 +54,17 @@ self.addEventListener('fetch',function(event){
             }else{
                 return fetch(event.request)
                     .then(function(res){
-                        return caches.open('dynamic')
+                        return caches.open(cache_dynamic_name)
                             .then(function(cache){
                                 cache.put(event.request.url,res.clone())
                                     return res;
                             })
                     })
                     .catch(function(err){
-                        
+                        return caches.open(cache_static_name)
+                            .then(function(cache){
+                                return cache.match('/offline.html');
+                            });
                     })
             }
         })        

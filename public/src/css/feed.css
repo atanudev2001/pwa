@@ -31,3 +31,8 @@
   display: block;
   margin: 10px auto;
 }
+
+#shared-moments{
+  display: flex;
+    justify-content: space-around;
+}

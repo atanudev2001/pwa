@@ -149,3 +149,14 @@ self.addEventListener('fetch', function (event) {
 //         fetch(event.request)
 //     );
 // });
+
+self.addEventListener('sync',function(e){
+    console.log('[Service worker] Background syncing',e);
+    if(e.tag === 'sync-new-post'){
+        console.log('[Service worker] syncying new post');
+        e.waitUntil(
+            readAllData('sync-posts')
+                
+        );
+    }
+})

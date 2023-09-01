@@ -121,7 +121,7 @@ form.addEventListener('submit', function(e){
         alert('Please enter valid inputs');
         return;
     }
-    openCreatePostModal();
+    closeCreatePostModal()
 
     if('serviceWorker' in navigator && 'SyncManager' in window){
       navigator.serviceWorker.ready
@@ -131,14 +131,14 @@ form.addEventListener('submit', function(e){
             title: titleInput.value,
             location:locationInput.value
           };
-          WriteData('sync-posts',post)
+          writeData('sync-posts',post)
           .then(function(){
             return sw.sync.register('sync-new-post');
           })
           .then(function(){
             let snackbarContainer = document.querySelector('#confirmation-toast');
             let data = {message: 'Your Post was saved for syncing!'};
-            snackbarContainer.MaterialSnackback.showSnackbar(data)
+            snackbarContainer.MaterialSnackbar.showSnackbar(data)
           })
           .catch(function(err){
             console.log(err)

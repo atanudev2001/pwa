@@ -1,6 +1,7 @@
 
 let defferedprompt;
 
+
 if('serviceWorker' in navigator){
     navigator.serviceWorker
     .register('/sw.js')
@@ -15,4 +16,7 @@ window.addEventListener('beforeinstallpromt', function(e){
     e.preventDefault();
     defferedprompt = e;
     return false;
-})
+});
+
+
+

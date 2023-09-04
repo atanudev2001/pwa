@@ -3,12 +3,14 @@
     {
       "id": 1,
       "Title": "First Post",
-      "Location": "Test Location"
+      "Location": "San Francisco",
+      "Image": "url('/src/images/sf-boat.jpg')"
     },
     {
-      "name": "David",
-      "Location": "Test Location",
-      "id": 2
+      "Title": "David",
+      "Location": "France",
+      "id": 2,
+      "Image": "url('/src/images/france.jpg')"
     }
   ]
 }

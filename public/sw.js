@@ -202,6 +202,10 @@ self.addEventListener('notificationclick', function(e){
     console.log(action);
     notification.close();
   }
-})
+});
+
+self.addEventListener('notificationclose', function(e){
+  console.log('notification was closed',e);
+});
 
 

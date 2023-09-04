@@ -43,7 +43,29 @@ function displaynotifications(){
     
     // new Notification('Successfully subscribed!',options)
 }
-function PermissionStatus(){
+
+function configurepushsub(){
+    if(!('serviceWorker' in navigator)){
+        return; 
+    }
+    let reg;
+    navigator.serviceWorker.ready
+        .then(function(swreg){
+            return swreg.pushManager.getSubscription();
+        })
+        .then(function(sub){
+            if(sub === null){
+                //create a new subscription
+                reg.pushManager.subscribe({
+                    userVisibleOnly: true
+                });
+            }else{
+                //We have a subscription
+
+            }
+        });
+}
+function notificationstatus(){
     Notification.requestPermission(function(PermissionStatus){
         console.log('Permission', PermissionStatus);
         if(PermissionStatus !='granted'){
@@ -58,6 +80,6 @@ function PermissionStatus(){
 if('Notification' in window){
     for(var i=0;i< enablenotifications.length;i++){
         enablenotifications[i].style.display = 'inline-block';
-        enablenotifications[i].addEventListener('click',PermissionStatus);
+        enablenotifications[i].addEventListener('click',notificationstatus);
     }
 }

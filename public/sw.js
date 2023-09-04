@@ -156,7 +156,52 @@ self.addEventListener('sync',function(e){
         console.log('[Service worker] syncying new post');
         e.waitUntil(
             readAllData('sync-posts')
-                
+                .then(function(data){
+                  for(var dt of data){
+                    fetch('http://localhost:3000/pwapost',{
+                      method: 'POST',
+                      headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        id:dt.id,
+                        title:dt.title,
+                        location:dt.location,
+                        images:dt.images
+                      })
+                    })
+                    .then(function(res){
+                      console.log('sent data',res);
+                      if(res.ok){
+                        res.json()
+                          .then(function(resdata){
+                            deleteItemFromData('sync-posts',resdata.id);
+                          });
+                      }
+                    })
+                    .catch(function(err){
+                      console.log('Error while sending data',err);
+                    })
+                  }
+                })
         );
     }
+});
+
+self.addEventListener('notificationclick', function(e){
+  let notification = e.notification;
+  let action = e.action;
+
+  console.log('notification:', notification);
+
+  if(action === 'confirm'){
+    console.log('confirm was choosen');
+    notification.close();
+  }else{
+    console.log(action);
+    notification.close();
+  }
 })
+
+

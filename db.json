@@ -2,15 +2,25 @@
   "pwapost": [
     {
       "id": 1,
-      "Title": "First Post",
-      "Location": "San Francisco",
-      "Image": "url('/src/images/sf-boat.jpg')"
+      "title": "First Post",
+      "location": "San Francisco",
+      "image": "url('/src/images/sf-boat.jpg')"
     },
     {
-      "Title": "David",
-      "Location": "France",
+      "title": "David",
+      "location": "France",
       "id": 2,
-      "Image": "url('/src/images/france.jpg')"
+      "image": "url('/src/images/france.jpg')"
+    },
+    {
+      "id": "2023-09-04T10:12:55.316Z",
+      "title": "Paris Tour",
+      "location": "Paris"
+    },
+    {
+      "id": "2023-09-04T10:27:59.920Z",
+      "title": "Germany",
+      "location": "Berlin"
     }
   ]
 }

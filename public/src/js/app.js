@@ -20,7 +20,19 @@ window.addEventListener('beforeinstallpromt', function(e){
 function displaynotifications(){
     if('serviceWorker' in navigator){
         let options ={
-            body:'You successfully subscribed to our Notifications Service'
+            body:'You successfully subscribed to our Notifications Service',
+            icon:'/src/images/icons/app-icon-96x96.png',
+            image:'/src/images/sf-boat.jpg',
+            dir:'ltr',
+            lang:'en-US',//BCP 47,
+            vibrate: [100,50,200], // vibrate for 100 ms pause for 50 ms and again vibrate for 300 ms (not supported by all devices)
+            badge:'/src/images/icons/app-icon-96x96.png',
+            tag: 'Confirm Notification',
+            renotify: true,
+            actions:[
+                {action:'confirm',title:'Okay',icon:'/src/images/icons/app-icon-96x96.png' },
+                {action:'cancel',title:'Cancel',icon:'/src/images/icons/app-icon-96x96.png' }
+            ]
         };
 
         navigator.serviceWorker.ready

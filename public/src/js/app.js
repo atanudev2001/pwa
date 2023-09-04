@@ -18,10 +18,18 @@ window.addEventListener('beforeinstallpromt', function(e){
 });
 
 function displaynotifications(){
-    let options ={
-        body:'You successfully subscribed to our Notifications Service'
-    };
-    new Notification('Successfully subscribed!',options)
+    if('serviceWorker' in navigator){
+        let options ={
+            body:'You successfully subscribed to our Notifications Service'
+        };
+
+        navigator.serviceWorker.ready
+            .then(function(swreg){
+                swreg.showNotification('Successfully subscribed(from SW)',options);
+            });
+    }
+    
+    // new Notification('Successfully subscribed!',options)
 }
 function PermissionStatus(){
     Notification.requestPermission(function(PermissionStatus){
